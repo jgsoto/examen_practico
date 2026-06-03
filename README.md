@@ -1,47 +1,52 @@
-# Arquitectura de Software: Evolución de Código
+# Enfoque 1: Código Espagueti (Big Ball of Mud)
 
-Este repositorio contiene el desarrollo de un proyecto práctico diseñado para evidenciar y contrastar la aplicación de tres enfoques de arquitectura y estructuración de software, implementado en **JavaScript (Node.js)**.
+Esta rama contiene la primera fase del proyecto: una solución funcional para un **Sistema de Gestión de Biblioteca**, implementada bajo el antipatrón de **Código Espagueti** o "Gran Bola de Lodo".
 
-## Enunciado del Proyecto
-> "Realizar un proyecto con el tema y lenguaje de programación (a excepción de tipo propietario) de su elección, el cual debe contener lo siguiente: Código Espagueti, Monolítico por capas, Enfoque DDD. Cada una debe estar en una rama diferente con su respectivo Readme."
-
-El propósito es resolver el mismo problema de negocio (un **Gestion de prestamo de libros en una biblioteca**) a través de tres etapas evolutivas, demostrando los beneficios de la separación de responsabilidades y el diseño guiado por el dominio.
+El objetivo de esta entrega es demostrar cómo la falta de estructura, aunque produce un software que "funciona", destruye la mantenibilidad, escalabilidad y testabilidad del sistema a largo plazo.
 
 ---
 
-## Estructura de Ramas (Branches)
+## Análisis de la Implementación
 
-El proyecto está dividido en tres ramas distintas. Cada una cuenta con su propio archivo `README.md` que detalla la implementación y las decisiones técnicas tomadas:
+El código se ha centralizado por completo en una única clase (`LibrarySystem.java`) y dentro de un solo método (`main`). A continuación, se detallan los problemas arquitectónicos introducidos intencionalmente:
 
-### 1. `feature/codigo-espagueti`
-* **Enfoque:** Código espagueti (Big Ball of Mud).
-* **Descripción:** Toda la lógica de negocio, interfaz de usuario y manejo de datos se encuentra acoplada en un único flujo, demostrando los problemas de mantenibilidad y escalabilidad.
+### 1. Ausencia de Encapsulamiento
+* Las clases internas (`Book`, `Member`, `Loan`) actúan como meros contenedores de datos (estructuras anémicas).
+* Sus atributos no son privados y carecen de métodos para controlar su estado. Cualquier parte del código puede modificar directamente propiedades críticas como `book.available = true` o `loan.returned = false` sin ninguna restricción ni validación previa.
 
-### 2. `feature/monolitico-capas`
-* **Enfoque:** Arquitectura Monolítica por Capas.
-* **Descripción:** Separación técnica de responsabilidades dividida en capas claras: Presentación (Controladores), Lógica de Negocio (Servicios) y Acceso a Datos (Repositorios).
+### 2. Violación del Principio de Responsabilidad Única (SRP)
+La clase `LibrarySystem` y su método `main` asumen simultáneamente múltiples responsabilidades que deberían estar completamente separadas:
+* **Interfaz de Usuario (UI):** Manejo directo de la consola mediante `Scanner` y formateo de los mensajes con `System.out.println`.
+* **Lógica de Negocio:** Validación de reglas del sistema (comprobar si un libro ya está prestado, si el miembro existe, control de secuencias autoincrementales de IDs).
+* **Persistencia de Datos:** Gestión del almacenamiento en memoria a través de listas `ArrayList` locales al método.
 
-### 3. `feature/enfoque-ddd`
-* **Enfoque:** Diseño Guiado por el Dominio (Domain-Driven Design).
-* **Descripción:** Implementación avanzada centrada en el modelo de negocio. Se evidencian conceptos clave de DDD como Entidades, Objetos de Valor (Value Objects), Agregados (Aggregates) y persistencia desacoplada.
+### 3. Alto Acoplamiento y Baja Cohesión
+* Todo el flujo del sistema depende de un ciclo infinito `while(true)` y un bloque `switch-case` gigante de acoplamiento rígido.
+* Si se deseara cambiar la interfaz de consola por una API Web (Spring Boot) o migrar el almacenamiento de `ArrayList` a una base de datos real (SQL), se tendría que reescribir prácticamente el 100% del archivo.
+
+### 4. Imposibilidad de Pruebas Unitarias
+* Es técnicamente inviable realizar pruebas sobre la lógica de negocio (por ejemplo, validar que un libro prestado cambie su estado a no disponible) sin tener que simular entradas de teclado por consola e interceptar de forma compleja la salida estándar del sistema.
 
 ---
 
-## Tecnologías Utilizadas
+## Tecnologías y Requisitos
 * **Lenguaje:** Java
-* **Persistencia:** En memoria / Simulación de almacenamiento de datos.
+* **Frameworks:** Ninguno (Sin dependencias externas para evidenciar el comportamiento crudo del antipatrón).
+* **Entrada/Salida:** Consola estándar (`java.util.Scanner`).
 
 ---
 
-## Cómo Explorar el Proyecto
-Puedes cambiar entre las diferentes ramas para revisar el código de cada enfoque usando los comandos de Git o el selector de ramas en la interfaz de GitHub:
+## Cómo Ejecutar este Enfoque
 
+1. Asegúrate de estar en esta rama:
 ```bash
-# Para revisar el código espagueti
-git checkout feature/codigo-espagueti
+   git checkout feature/codigo-espagueti
+``` 
+2. Compila el archivo principal desde tu terminal o ejecútalo directamente desde IntelliJ IDEA:
 
-# Para revisar el monolítico por capas
-git checkout feature/monolitico-capas
+```Bash
+   javac LibrarySystem.java
+   java LibrarySystem
+```
 
-# Para revisar el enfoque DDD
-git checkout feature/ddd
+3. Sigue las instrucciones del menú en pantalla para registrar libros, miembros y gestionar préstamos.
