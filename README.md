@@ -1,47 +1,76 @@
-# Arquitectura de Software: Evolución de Código
+# Enfoque 2: Arquitectura Monolítica por Capas
 
-Este repositorio contiene el desarrollo de un proyecto práctico diseñado para evidenciar y contrastar la aplicación de tres enfoques de arquitectura y estructuración de software, implementado en **Java**.
+Esta rama contiene la segunda fase del proyecto: una evolución del Sistema de Gestión de Biblioteca estructurado bajo una **Arquitectura Monolítica por Capas**.
 
-## Enunciado del Proyecto
-> "Realizar un proyecto con el tema y lenguaje de programación (a excepción de tipo propietario) de su elección, el cual debe contener lo siguiente: Código Espagueti, Monolítico por capas, Enfoque DDD. Cada una debe estar en una rama diferente con su respectivo Readme."
-
-El propósito es resolver el mismo problema de negocio (un **Gestion de prestamo de libros en una biblioteca**) a través de tres etapas evolutivas, demostrando los beneficios de la separación de responsabilidades y el diseño guiado por el dominio.
+A diferencia del enfoque anterior, el código se ha organizado separando las resposabilidades en varias clases.
 
 ---
 
-## Estructura de Ramas (Branches)
+## Estructura del Proyecto y Capas
 
-El proyecto está dividido en tres ramas distintas. Cada una cuenta con su propio archivo `README.md` que detalla la implementación y las decisiones técnicas tomadas:
+El proyecto organiza sus componentes dentro del paquete principal `library` de la siguiente manera:
 
-### 1. `feature/codigo-espagueti`
-* **Enfoque:** Código espagueti (Big Ball of Mud).
-* **Descripción:** Toda la lógica de negocio, interfaz de usuario y manejo de datos se encuentra acoplada en un único flujo, demostrando los problemas de mantenibilidad y escalabilidad.
+```text
+src/main/java/library/
+├── controller/          <-- CAPA DE PRESENTACIÓN (Controladores Web)
+│   ├── BookController.java
+│   ├── HomeController.java
+│   ├── LoanController.java
+│   └── MemberController.java
+├── service/             <-- CAPA DE LÓGICA DE NEGOCIO (Servicios)
+│   ├── BookService.java
+│   ├── LoanService.java
+│   └── MemberService.java
+├── repository/          <-- CAPA DE ACCESO A DATOS (Repositorios Spring Data JPA)
+│   ├── BookRepository.java
+│   ├── LoanRepository.java
+│   └── MemberRepository.java
+├── model/               <-- MODELO DE DATOS / ENTIDADES ANÉMICAS
+│   ├── Book.java
+│   ├── Loan.java
+│   └── Member.java
+└── LibraryApplication.java
+```
 
-### 2. `feature/monolitico-capas`
-* **Enfoque:** Arquitectura Monolítica por Capas.
-* **Descripción:** Separación técnica de responsabilidades dividida en capas claras: Presentación (Controladores), Lógica de Negocio (Servicios) y Acceso a Datos (Repositorios).
+## Análisis de la Arquitectura por Capas
+En este diseño se implementa una arquitectura por capas, respetando una jerarquía de dependencias estrictamente unidireccional (la capa superior conoce a la inferior, pero no al revés):
 
-### 3. `feature/enfoque-ddd`
-* **Enfoque:** Diseño Guiado por el Dominio (Domain-Driven Design).
-* **Descripción:** Implementación avanzada centrada en el modelo de negocio. Se evidencian conceptos clave de DDD como Entidades, Objetos de Valor (Value Objects), Agregados (Aggregates) y persistencia desacoplada.
+1. Capa de Presentación (controller/ y templates/)
+Responsabilidad: Gestionar las peticiones HTTP y renderizar las vistas del usuario.
 
----
+
+2. Capa de Lógica de Negocio (service/)
+Responsabilidad: Orquestar los procesos y validar las reglas del negocio (por ejemplo, comprobar la disponibilidad de un libro antes de procesar un préstamo).
+
+
+3. Capa de Acceso a Datos (repository/ y model/)
+Responsabilidad: Gestionar la persistencia de la información en el sistema de almacenamiento.
+
+
+## Limitaciones de este Enfoque (Frente a DDD)
+Aunque esta arquitectura resuelve el desorden del código espagueti, tiene ciertos problemas arquitectónicos tradicionales que justifican el salto hacia DDD:
+
+**Modelos Anémicos:** Las clases en model/ suelen ser simples contenedores de datos (Getters y Setters) sin comportamiento ni validaciones internas de negocio. La lógica está en los servicios.
+
+**Acoplamiento a la Tecnología:** La capa de negocio (service) depende directamente de las abstracciones de persistencia (repository), lo que dificulta cambiar de infraestructura tecnológia.
 
 ## Tecnologías Utilizadas
-* **Lenguaje:** Java
-* **Persistencia:** En memoria / Simulación de almacenamiento de datos.
+**Framework Principal:** Spring Boot
 
----
+**Motor de Plantillas (UI):** Thymeleaf (.html)
 
-## Cómo Explorar el Proyecto
-Puedes cambiar entre las diferentes ramas para revisar el código de cada enfoque usando los comandos de Git o el selector de ramas en la interfaz de GitHub:
+**Persistencia:** Spring Data JPA con Base de Datos H2 (en memoria).
 
-```bash
-# Para revisar el código espagueti
-git checkout feature/codigo-espagueti
+## Cómo Ejecutar este Enfoque
+Asegúrate de estar en esta rama:
 
-# Para revisar el monolítico por capas
+```Bash
 git checkout feature/monolitico-capas
+```
+Ejecuta la aplicación desde tu terminal mediante Maven o directamente dándole Run a LibraryApplication en IntelliJ:
 
-# Para revisar el enfoque DDD
-git checkout feature/ddd
+```Bash
+./mvnw spring-boot:run
+```
+
+Abre tu navegador web e ingresa a: http://localhost:8080 para interactuar con el sistema a través de la interfaz gráfica adaptada.

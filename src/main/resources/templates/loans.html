@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loans</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2>Loans</h2>
+
+        <a href="/" class="btn btn-secondary">
+            Home
+        </a>
+
+    </div>
+
+    <div class="card mb-4">
+
+        <div class="card-header">
+            Borrow Book
+        </div>
+
+        <div class="card-body">
+
+            <form action="/loans" method="post">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Book
+                    </label>
+
+                    <select class="form-select"
+                            name="bookId">
+
+                        <option
+                                th:each="book : ${availableBooks}"
+                                th:value="${book.id}"
+                                th:text="${book.title}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Member
+                    </label>
+
+                    <select class="form-select"
+                            name="memberId">
+
+                        <option
+                                th:each="member : ${members}"
+                                th:value="${member.id}"
+                                th:text="${member.name}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button class="btn btn-warning">
+                    Borrow
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <table class="table table-striped">
+
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Book ID</th>
+            <th>Member ID</th>
+            <th>Returned</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="loan : ${loans}">
+
+            <td th:text="${loan.id}"></td>
+
+            <td th:text="${loan.bookId}"></td>
+
+            <td th:text="${loan.memberId}"></td>
+
+            <td th:text="${loan.returned ? 'Yes' : 'No'}"></td>
+
+            <td>
+
+                <form th:if="${!loan.returned}"
+                      th:action="@{/loans/{id}/return(id=${loan.id})}"
+                      method="post">
+
+                    <button class="btn btn-sm btn-success">
+                        Return
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
