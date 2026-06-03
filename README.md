@@ -1,6 +1,6 @@
 # Arquitectura de Software: Evolución de Código
 
-Este repositorio contiene el desarrollo de un proyecto práctico diseñado para evidenciar y contrastar la aplicación de tres enfoques de arquitectura y estructuración de software, implementado en **JavaScript (Node.js)**.
+Este repositorio contiene el desarrollo de un proyecto práctico diseñado para evidenciar y contrastar la aplicación de tres enfoques de arquitectura y estructuración de software, implementado en **Java**.
 
 ## Enunciado del Proyecto
 > "Realizar un proyecto con el tema y lenguaje de programación (a excepción de tipo propietario) de su elección, el cual debe contener lo siguiente: Código Espagueti, Monolítico por capas, Enfoque DDD. Cada una debe estar en una rama diferente con su respectivo Readme."
