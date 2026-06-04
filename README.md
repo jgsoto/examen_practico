@@ -1,6 +1,6 @@
 # Enfoque 2: Arquitectura Monolítica por Capas
 
-Esta rama contiene la segunda fase del proyecto: una evolución del Sistema de Gestión de Biblioteca estructurado bajo una **Arquitectura Monolítica por Capas**.
+Esta rama contiene la segunda fase del proyecto: El Ssistema de Gestión de préstamo de libros estructurado usando **Arquitectura Monolítica por Capas**.
 
 A diferencia del enfoque anterior, el código se ha organizado separando las resposabilidades en varias clases.
 
@@ -33,7 +33,7 @@ src/main/java/library/
 ```
 
 ## Análisis de la Arquitectura por Capas
-En este diseño se implementa una arquitectura por capas, respetando una jerarquía de dependencias estrictamente unidireccional (la capa superior conoce a la inferior, pero no al revés):
+Se implementa una arquitectura por capas, respetando una jerarquía de dependencias estrictamente unidireccional (la capa superior conoce a la inferior, pero no al revés):
 
 1. Capa de Presentación (controller/ y templates/)
 Responsabilidad: Gestionar las peticiones HTTP y renderizar las vistas del usuario.
@@ -50,7 +50,7 @@ Responsabilidad: Gestionar la persistencia de la información en el sistema de a
 ## Limitaciones de este Enfoque (Frente a DDD)
 Aunque esta arquitectura resuelve el desorden del código espagueti, tiene ciertos problemas arquitectónicos tradicionales que justifican el salto hacia DDD:
 
-**Modelos Anémicos:** Las clases en model/ suelen ser simples contenedores de datos (Getters y Setters) sin comportamiento ni validaciones internas de negocio. La lógica está en los servicios.
+**Modelos Anémicos:** Las clases en model/ son simples contenedores de datos (Getters y Setters) sin comportamiento ni validaciones internas de negocio. La lógica está en los servicios.
 
 **Acoplamiento a la Tecnología:** La capa de negocio (service) depende directamente de las abstracciones de persistencia (repository), lo que dificulta cambiar de infraestructura tecnológia.
 
@@ -62,15 +62,15 @@ Aunque esta arquitectura resuelve el desorden del código espagueti, tiene ciert
 **Persistencia:** Spring Data JPA con Base de Datos H2 (en memoria).
 
 ## Cómo Ejecutar este Enfoque
-Asegúrate de estar en esta rama:
+1. Entrar en la rama:
 
 ```Bash
 git checkout feature/monolitico-capas
 ```
-Ejecuta la aplicación desde tu terminal mediante Maven o directamente dándole Run a LibraryApplication en IntelliJ:
+2. Ejecutar la aplicación desde la terminal mediante Maven o directamente dándole Run a LibraryApplication en IntelliJ:
 
 ```Bash
 ./mvnw spring-boot:run
 ```
 
-Abre tu navegador web e ingresa a: http://localhost:8080 para interactuar con el sistema a través de la interfaz gráfica adaptada.
+3. Abrir tu navegador web e ingresar a: http://localhost:8080 para interactuar con el sistema a través de la interfaz gráfica.
