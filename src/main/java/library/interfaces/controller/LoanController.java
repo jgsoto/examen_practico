@@ -1,10 +1,10 @@
 package library.interfaces.controller;
 
-import library.application.BorrowBookUseCase;
-import library.application.GetAvailableBooksUseCase;
-import library.application.GetLoansUseCase;
-import library.application.GetMembersUseCase;
-import library.application.ReturnBookUseCase;
+import library.application.usecase.BorrowBookUseCase;
+import library.application.usecase.GetAvailableBooksUseCase;
+import library.application.usecase.GetLoansUseCase;
+import library.application.usecase.GetMembersUseCase;
+import library.application.usecase.ReturnBookUseCase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package library.interfaces.controller;
 
-import library.application.GetMembersUseCase;
-import library.application.RegisterMemberUseCase;
+import library.application.usecase.GetMembersUseCase;
+import library.application.usecase.RegisterMemberUseCase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package library.application;
+package library.application.usecase;
 
 import library.domain.model.Book;
 import library.domain.model.Loan;
@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ReturnBookUseCase {
+public class BorrowBookUseCase {
 
     private final BookRepository bookRepository;
     private final LoanRepository loanRepository;
 
-    public ReturnBookUseCase(
+    public BorrowBookUseCase(
             BookRepository bookRepository,
             LoanRepository loanRepository
     ) {
@@ -22,22 +22,26 @@ public class ReturnBookUseCase {
         this.loanRepository = loanRepository;
     }
 
-    public Loan execute(Long loanId) {
-
-        Loan loan =
-                loanRepository.findById(loanId)
-                        .orElseThrow();
-
-        loan.returnLoan();
+    public Loan execute(
+            Long bookId,
+            Long memberId
+    ) {
 
         Book book =
-                bookRepository.findById(
-                        loan.getBookId()
-                ).orElseThrow();
+                bookRepository.findById(bookId)
+                        .orElseThrow();
 
-        book.returnBook();
+        book.borrow();
 
         bookRepository.save(book);
+
+        Loan loan =
+                new Loan(
+                        null,
+                        bookId,
+                        memberId,
+                        false
+                );
 
         return loanRepository.save(loan);
     }

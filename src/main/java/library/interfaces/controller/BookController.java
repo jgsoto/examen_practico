@@ -1,7 +1,7 @@
 package library.interfaces.controller;
 
-import library.application.GetBooksUseCase;
-import library.application.RegisterBookUseCase;
+import library.application.usecase.GetBooksUseCase;
+import library.application.usecase.RegisterBookUseCase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
