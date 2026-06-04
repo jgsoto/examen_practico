@@ -5,7 +5,7 @@ Este repositorio contiene el desarrollo de un proyecto práctico diseñado para 
 ## Enunciado del Proyecto
 > "Realizar un proyecto con el tema y lenguaje de programación (a excepción de tipo propietario) de su elección, el cual debe contener lo siguiente: Código Espagueti, Monolítico por capas, Enfoque DDD. Cada una debe estar en una rama diferente con su respectivo Readme."
 
-El propósito es resolver el mismo problema de negocio (un **Gestion de prestamo de libros en una biblioteca**) a través de tres etapas evolutivas, demostrando los beneficios de la separación de responsabilidades y el diseño guiado por el dominio.
+El propósito es resolver el mismo problema de negocio (**Gestion de prestamo de libros en una biblioteca**) a través de tres etapas evolutivas, demostrando los beneficios de la separación de responsabilidades y el diseño guiado por el dominio.
 
 ---
 
@@ -19,11 +19,11 @@ El proyecto está dividido en tres ramas distintas. Cada una cuenta con su propi
 
 ### 2. `feature/monolitico-capas`
 * **Enfoque:** Arquitectura Monolítica por Capas.
-* **Descripción:** Separación técnica de responsabilidades dividida en capas claras: Presentación (Controladores), Lógica de Negocio (Servicios) y Acceso a Datos (Repositorios).
+* **Descripción:** Separación técnica de responsabilidades dividida en capas claras: Presentación (Controladores), Lógica de Negocio (Servicios) y Acceso a Datos (Repositorios/Modelos).
 
-### 3. `feature/enfoque-ddd`
+### 3. `feature/ddd`
 * **Enfoque:** Diseño Guiado por el Dominio (Domain-Driven Design).
-* **Descripción:** Implementación avanzada centrada en el modelo de negocio. Se evidencian conceptos clave de DDD como Entidades, Objetos de Valor (Value Objects), Agregados (Aggregates) y persistencia desacoplada.
+* **Descripción:** Implementación centrada en el modelo de negocio. Se evidencian conceptos clave de DDD como Entidades, Objetos de Valor (Value Objects), Agregados (Aggregates) y persistencia desacoplada.
 
 ---
 
