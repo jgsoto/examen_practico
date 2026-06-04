@@ -44,7 +44,7 @@
                         <option
                                 th:each="book : ${availableBooks}"
                                 th:value="${book.id}"
-                                th:text="${book.title}">
+                                th:text="${book.title.value}">
                         </option>
 
                     </select>

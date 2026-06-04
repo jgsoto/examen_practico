@@ -62,7 +62,7 @@
 
         <tr th:each="book : ${books}">
             <td th:text="${book.id}"></td>
-            <td th:text="${book.title}"></td>
+            <td th:text="${book.title.value}"></td>
             <td th:text="${book.available ? 'Yes' : 'No'}"></td>
         </tr>
 
